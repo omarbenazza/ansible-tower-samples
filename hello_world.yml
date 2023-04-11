@@ -1,8 +1,12 @@
----
-- name: Hello World!
-  hosts: all
- 
+collections:
+    - paloaltonetworks.panos
+
   tasks:
- 
-  - name: Hello World!
-    shell: echo "Hi! Tower is working."
+  - name: Get the system info
+    panos_op:
+      provider: '{{ provider }}'
+      cmd: 'show system info'
+    register: res
+
+  - debug:
+      msg: '{{ res.stdout }}'
